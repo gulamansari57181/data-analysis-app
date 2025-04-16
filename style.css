@@ -1,0 +1,155 @@
+/* Base styles */
+
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background-color: #121212;
+    /* Dark background */
+    color: #f0f0f0;
+    /* Light text for contrast */
+    margin: 0;
+    padding: 0;
+}
+
+
+/* Neumorphic header */
+
+.neumorphic-header {
+    text-align: center;
+    padding: 2rem 0;
+    margin-bottom: 2rem;
+}
+
+.neumorphic-header h1 {
+    font-size: 2.5rem;
+    color: #f0f0f0;
+    text-shadow: 3px 3px 6px #4b4b4b, -3px -3px 6px #ff4f5a;
+    /* Darker red shadow for a subtle effect */
+    margin-bottom: 0.5rem;
+}
+
+.subheader {
+    color: #888;
+    /* Subtle light gray */
+    font-size: 1.1rem;
+    margin-top: 0;
+}
+
+
+/* Neumorphic cards */
+
+.neumorphic-card {
+    background: #1c1c1c;
+    /* Slightly lighter black for cards */
+    border-radius: 15px;
+    padding: 1.5rem;
+    margin-bottom: 1.5rem;
+    box-shadow: 8px 8px 15px #4b4b4b, -8px -8px 15px #ff4f5a;
+    /* Dark red and black shadow */
+}
+
+.sidebar {
+    margin: 1rem 0.5rem;
+    padding: 1rem;
+}
+
+.main {
+    margin: 1rem;
+    padding: 1.5rem;
+}
+
+.empty-state {
+    text-align: center;
+    padding: 3rem;
+}
+
+
+/* Form elements */
+
+.stSelectbox,
+.stSlider,
+.stRadio,
+.stFileUploader,
+.stNumberInput {
+    margin-bottom: 1rem;
+}
+
+.stButton>button {
+    background: #1c1c1c;
+    /* Card-like background */
+    border: none;
+    border-radius: 10px;
+    padding: 0.5rem 1rem;
+    box-shadow: 5px 5px 10px #4b4b4b, -5px -5px 10px #ff4f5a;
+    /* Subtle shadow effect */
+    color: #f0f0f0;
+    font-weight: 500;
+    transition: all 0.2s ease;
+}
+
+.stButton>button:hover {
+    box-shadow: inset 5px 5px 10px #4b4b4b, inset -5px -5px 10px #ff4f5a;
+    /* Inset effect on hover */
+}
+
+
+/* Tabs */
+
+.stTabs [data-baseweb="tab-list"] {
+    gap: 10px;
+}
+
+.stTabs [data-baseweb="tab"] {
+    background: #1c1c1c;
+    border-radius: 10px 10px 0 0 !important;
+    box-shadow: 5px 5px 10px #4b4b4b, -5px -5px 10px #ff4f5a;
+    padding: 0.5rem 1rem;
+    transition: all 0.2s ease;
+}
+
+.stTabs [data-baseweb="tab"]:hover {
+    background: #1c1c1c;
+    box-shadow: inset 5px 5px 10px #4b4b4b, inset -5px -5px 10px #ff4f5a;
+}
+
+.stTabs [aria-selected="true"] {
+    background: #1c1c1c;
+    box-shadow: inset 5px 5px 10px #4b4b4b, inset -5px -5px 10px #ff4f5a;
+}
+
+
+/* Dataframe styling */
+
+.stDataFrame {
+    border-radius: 10px;
+    box-shadow: inset 5px 5px 10px #4b4b4b, inset -5px -5px 10px #ff4f5a;
+}
+
+
+/* Metrics */
+
+.stMetric {
+    background: #1c1c1c;
+    border-radius: 10px;
+    padding: 1rem;
+    box-shadow: 5px 5px 10px #4b4b4b, -5px -5px 10px #ff4f5a;
+}
+
+
+/* Spinner */
+
+.stSpinner {
+    color: #ff4f5a;
+    /* Red color for spinner */
+}
+
+
+/* Responsive adjustments */
+
+@media (max-width: 768px) {
+    .neumorphic-header h1 {
+        font-size: 2rem;
+    }
+    .neumorphic-card {
+        padding: 1rem;
+    }
+}
