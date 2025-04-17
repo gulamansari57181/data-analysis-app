@@ -1,9 +1,6 @@
 streamlit==1.25.0
 pandas==2.0.3
-numpy==1.24.3  # Explicitly add numpy (required by pandas and sklearn)
+numpy==1.24.3  
 matplotlib==3.7.1
-seaborn==0.12.2  # Add seaborn since you're using it
+seaborn==0.12.2  
 plotly==5.15.0
-scikit-learn==1.3.0
-fpdf2==2.7.4
-joblib==1.3.2  # Recommended for model serialization with sklearn
