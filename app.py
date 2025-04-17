@@ -54,20 +54,51 @@ def main():
         
         if uploaded_file is not None:
             try:
+                # Read the CSV file
                 df = pd.read_csv(uploaded_file)
+                
+                # Create a copy to avoid SettingWithCopyWarning
+                df = df.copy()
+                
+                # Specific type conversion for your columns
+                df['Transaction ID'] = df['Transaction ID'].astype('int64')
+                df['User ID'] = df['User ID'].astype('int64')
+                df['Gesture Dynamics'] = df['Gesture Dynamics'].astype('float64')
+                df['Touch Dynamics'] = df['Touch Dynamics'].astype('float64')
+                df['Transaction Amount'] = df['Transaction Amount'].astype('float64')
+                
+                # Convert object columns that should be categorical
+                categorical_cols = [
+                    'Browser Type', 'Device Orientation', 'Is Fraud',
+                    'Merchant Category', 'Operating System', 'Transaction Type'
+                ]
+                for col in categorical_cols:
+                    if col in df.columns:
+                        df[col] = df[col].astype('category')
+                
+                # Handle datetime conversion
+                if 'Timestamp' in df.columns:
+                    df['Timestamp'] = pd.to_datetime(df['Timestamp'], errors='coerce')
+                
+                # Convert remaining object columns to string
+                object_cols = df.select_dtypes(include=['object']).columns
+                for col in object_cols:
+                    if col not in categorical_cols:  # Skip already converted columns
+                        df[col] = df[col].astype('str')
+                
+                # Store in session state
                 st.session_state.df = df
+                
+                # Display the processed dataframe
+                st.dataframe(df)
                 st.success("Dataset loaded successfully!")
                 
-                # # Show basic info
-                # st.markdown("### Dataset Info")
-                # buffer = io.StringIO()
-                # df.info(buf=buffer)
-                # st.text(buffer.getvalue())
-                
-                # st.markdown(f"**Shape:** {df.shape}")
-                
+                # Optional: Show data types after conversion
+                with st.expander("Show Data Types"):
+                    st.write(df.dtypes)
+                    
             except Exception as e:
-                st.error(f"Error loading file: {e}")
+                st.error(f"Error loading file: {str(e)}")
         
         st.markdown("</div>", unsafe_allow_html=True)
         
@@ -417,7 +448,7 @@ def main():
                     df['z_score'] = (df[selected_feat] - mean_val) / std_val
                     outliers = df[np.abs(df['z_score']) > 3]
 
-                    import plotly.express as px
+                    
                     fig = px.histogram(df, x=selected_feat, nbins=30, title=f"Distribution of {selected_feat}")
                     fig.add_vline(x=mean_val, line_dash="dash", line_color="red", annotation_text="Mean")
                     fig.add_vline(x=mean_val + std_val, line_dash="dot", line_color="green", annotation_text="+1 Std Dev")
@@ -581,7 +612,7 @@ def main():
                     
                     # Hardcoded metrics from the table
                     metrics = {
-                        "Random Forest": {"Accuracy": 0.99989, "Recall": 1.00000, "F2 Score": 0.99996},
+                        "Random Forest": {"Accuracy": 0.99989, "Recall": 0.96300, "F2 Score": 0.99996},
                         "Extra Trees": {"Accuracy": 0.99986, "Recall": 0.870000, "F2 Score": 0.99994},
                         "XGBoost": {"Accuracy": 0.99973, "Recall": 0.9100, "F2 Score": 0.99989},
                         "CatBoost": {"Accuracy": 0.99947, "Recall": 0.92400, "F2 Score": 0.99979},
