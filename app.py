@@ -7,6 +7,9 @@ import plotly.express as px
 import io
 import time
 
+
+
+
 # Set page config for neomorphic design
 st.set_page_config(
     page_title="CyberSec Fraud Analyzer",
@@ -26,11 +29,98 @@ local_css("style.css")
 def main():
     # Custom HTML/CSS for neomorphic header
     st.markdown("""
-    <div class="neumorphic-header">
-        <h1>🛡️ CyberSec Fraud Detection</h1>
-        <p class="subheader">Analyze cybersecurity fraud datasets across assignments</p>
-    </div>
+        <style>
+        .neumorphic-header {
+            background: #1e1e2f;
+            padding: 2rem;
+            border-radius: 1rem;
+            box-shadow: 8px 8px 16px #141421,
+                        -8px -8px 16px #282845;
+            text-align: center;
+            color: #fff;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            margin-bottom: 2rem;
+        }
+        .neumorphic-header h1 {
+            font-size: 2.5rem;
+            margin-bottom: 0.5rem;
+            color: #ff4c4c;
+            text-shadow: 0 0 10px rgba(255,76,76,0.7);
+        }
+        .subheader {
+            font-size: 1.1rem;
+            color: #ccc;
+            margin-bottom: 1.5rem;
+        }
+        .author-info {
+            background-color: #10101a;
+            padding: 1.2rem;
+            border-radius: 1rem;
+            display: inline-block;
+            text-align: left;
+            animation: fadeInUp 1.5s ease;
+            color: #eee;
+            font-size: 0.95rem;
+        }
+        .avatar-img {
+            width: 64px;
+            height: 64px;
+            border-radius: 50%;
+            margin-bottom: 0.8rem;
+            border: 2px solid #555;
+        }
+        .highlight-author {
+            font-weight: bold;
+            color: #00ffd5;
+        }
+        .highlight-date {
+            font-style: italic;
+            color: #aaa;
+        }
+        .author-tagline {
+            margin-top: 0.3rem;
+            color: #cfcfcf;
+        }
+        .social-btn {
+            margin-right: 0.8rem;
+            text-decoration: none;
+            color: #00bfff;
+            border: 1px solid #00bfff;
+            padding: 0.3rem 0.8rem;
+            border-radius: 8px;
+            transition: all 0.3s ease-in-out;
+        }
+        .social-btn:hover {
+            background-color: #00bfff;
+            color: #000;
+        }
+        @keyframes fadeInUp {
+            from {
+                transform: translateY(20px);
+                opacity: 0;
+            }
+            to {
+                transform: translateY(0);
+                opacity: 1;
+            }
+        }
+        </style>
     """, unsafe_allow_html=True)
+
+    # Render the component
+    st.markdown("""
+        <div class="neumorphic-header">
+            <h1>🛡️ CyberSec Fraud Detection</h1>
+            <p class="subheader">Analyze cybersecurity frauds by power of data-driven approach</p>
+            <a href="https://github.com/gulamansari57181" target="_blank">
+                <img src="https://avatars.githubusercontent.com/u/00000000?v=4" alt="Author Avatar" class="avatar-img">
+            </a>
+                <p>👨‍💻 Created by <span class="highlight-author">Mohd Gulam Ansari</span> | 📅 <span class="highlight-date">April 2025</span></p>
+                <p class="author-tagline">M.Tech | NIT Surathkal | Cybersecurity Enthusiast 🔐</p>
+                
+        </div>
+    """, unsafe_allow_html=True)
+
     
     # Initialize session state
     if 'df' not in st.session_state:
