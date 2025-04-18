@@ -7,7 +7,7 @@ import plotly.express as px
 import io
 import time
 
-
+DEFAULT_DATA_PATH = "credit_card_fraud_detection_data.csv" 
 
 
 # Set page config for neomorphic design
@@ -130,59 +130,68 @@ def main():
     if 'model_trained' not in st.session_state:
         st.session_state.model_trained = False
     
-    # Sidebar - File upload and basic operations
     with st.sidebar:
         st.markdown("""
         <div class="neumorphic-card sidebar">
             <h3>📁 Dataset Operations</h3>
+            <p>Select a dataset source:</p>
         """, unsafe_allow_html=True)
-        
-        uploaded_file = st.file_uploader("Upload CSV File", type=["csv"])
-        
-        if uploaded_file is not None:
+
+        # Upload OR use default
+        uploaded_file = st.file_uploader("📂 Upload your dataset (.csv)", type=["csv"])
+        use_default = st.checkbox("🚀 Use built-in default dataset")
+
+        if uploaded_file is None and not use_default:
+            st.warning("Please upload a dataset or check 'Use default dataset' to proceed.")
+        else:
             try:
-                # Read the CSV file
-                df = pd.read_csv(uploaded_file)
-                
-                # Create a copy to avoid SettingWithCopyWarning
-                df = df.copy()
-                
-                # Specific type conversion for your columns
-                df['Transaction ID'] = df['Transaction ID'].astype('int64')
-                df['User ID'] = df['User ID'].astype('int64')
-                df['Gesture Dynamics'] = df['Gesture Dynamics'].astype('float64')
-                df['Touch Dynamics'] = df['Touch Dynamics'].astype('float64')
-                df['Transaction Amount'] = df['Transaction Amount'].astype('float64')
-                
-                # Convert object columns that should be categorical
-                categorical_cols = [
-                    'Browser Type', 'Device Orientation', 'Is Fraud',
-                    'Merchant Category', 'Operating System', 'Transaction Type'
-                ]
-                for col in categorical_cols:
-                    if col in df.columns:
-                        df[col] = df[col].astype('category')
-                
-                # Handle datetime conversion
-                if 'Timestamp' in df.columns:
-                    df['Timestamp'] = pd.to_datetime(df['Timestamp'], errors='coerce')
-                
-                # Convert remaining object columns to string
-                object_cols = df.select_dtypes(include=['object']).columns
-                for col in object_cols:
-                    if col not in categorical_cols:  # Skip already converted columns
-                        df[col] = df[col].astype('str')
-                
-                # Store in session state
-                st.session_state.df = df
-                
-                # Display the processed dataframe
-                st.dataframe(df)
-                st.success("Dataset loaded successfully!")
-                
-                # Optional: Show data types after conversion
-                with st.expander("Show Data Types"):
-                    st.write(df.dtypes)
+                # Load user dataset or default
+                if uploaded_file is not None:
+                    df = pd.read_csv(uploaded_file)
+                    st.success("✅ Uploaded dataset loaded successfully!")
+                elif use_default:
+                    df = pd.read_csv(DEFAULT_DATA_PATH)  # Make sure this file exists
+                    st.info("✅ Using default dataset.")
+                    
+                    # Create a copy to avoid SettingWithCopyWarning
+                    df = df.copy()
+                    
+                    # Specific type conversion for your columns
+                    df['Transaction ID'] = df['Transaction ID'].astype('int64')
+                    df['User ID'] = df['User ID'].astype('int64')
+                    df['Gesture Dynamics'] = df['Gesture Dynamics'].astype('float64')
+                    df['Touch Dynamics'] = df['Touch Dynamics'].astype('float64')
+                    df['Transaction Amount'] = df['Transaction Amount'].astype('float64')
+                    
+                    # Convert object columns that should be categorical
+                    categorical_cols = [
+                        'Browser Type', 'Device Orientation', 'Is Fraud',
+                        'Merchant Category', 'Operating System', 'Transaction Type'
+                    ]
+                    for col in categorical_cols:
+                        if col in df.columns:
+                            df[col] = df[col].astype('category')
+                    
+                    # Handle datetime conversion
+                    if 'Timestamp' in df.columns:
+                        df['Timestamp'] = pd.to_datetime(df['Timestamp'], errors='coerce')
+                    
+                    # Convert remaining object columns to string
+                    object_cols = df.select_dtypes(include=['object']).columns
+                    for col in object_cols:
+                        if col not in categorical_cols:  # Skip already converted columns
+                            df[col] = df[col].astype('str')
+                    
+                    # Store in session state
+                    st.session_state.df = df
+                    
+                    # Display the processed dataframe
+                    st.dataframe(df)
+                    st.success("Dataset loaded successfully!")
+                    
+                    # Optional: Show data types after conversion
+                    with st.expander("Show Data Types"):
+                        st.write(df.dtypes)
                     
             except Exception as e:
                 st.error(f"Error loading file: {str(e)}")
