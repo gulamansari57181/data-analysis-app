@@ -110,7 +110,7 @@ def main():
     # Render the component
     st.markdown("""
         <div class="neumorphic-header">
-            <h1>🛡️ CyberSec Fraud Detection</h1>
+            <h1>🛡️ CyberSecurity Fraud Detection</h1>
             <p class="subheader">Analyze cybersecurity frauds by power of data-driven approach</p>
             <a href="https://github.com/gulamansari57181" target="_blank">
                 <img src="https://avatars.githubusercontent.com/u/00000000?v=4" alt="Author Avatar" class="avatar-img">
