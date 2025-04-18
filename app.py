@@ -117,7 +117,7 @@ def main():
             </a>
                 <p>👨‍💻 Created by <span class="highlight-author">Mohd Gulam Ansari</span> | 📅 <span class="highlight-date">April 2025</span></p>
                 <p class="author-tagline">M.Tech | NIT Surathkal | Cybersecurity Enthusiast 🔐</p>
-                
+               
         </div>
     """, unsafe_allow_html=True)
 
@@ -413,10 +413,11 @@ def main():
                     elif chart_type == "Scatter Plot":
                         fig = px.scatter(df, x=x_axis, y=y_axis, title=f"{y_axis} vs {x_axis}")
                     elif chart_type == "Correlation Heatmap":
+                        import numpy as np  # Make sure this is present at the top if not already
                         numeric_df = df.select_dtypes(include=[np.number])
                         corr = numeric_df.corr()
                         fig = px.imshow(corr, text_auto=True, aspect="auto", 
-                                       title="Correlation Heatmap")
+                                    title="Correlation Heatmap")
                     elif chart_type == "Pie Chart":
                         value_counts = df[x_axis].value_counts().reset_index()
                         value_counts.columns = [x_axis, 'count']
